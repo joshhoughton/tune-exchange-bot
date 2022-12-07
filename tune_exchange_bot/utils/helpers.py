@@ -10,7 +10,6 @@ def parse_spotify_track_id(spotify_url: str) -> str:
     Returns:
         str: a Spotify track ID
     """
-
     pattern = r".*(https?://)?open\.spotify\.com/track/([A-z0-9]{22}).*"
 
     match = re.match(pattern, spotify_url)
