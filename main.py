@@ -1,3 +1,7 @@
+from time import sleep
+
+from fbchat import Client
+
 from tune_exchange_bot import config, facebook
 from tune_exchange_bot.utils.facebook import process_message
 
@@ -19,4 +23,10 @@ if __name__ == "__main__":
         for message_object in messages:
             process_message(message_object)
 
-    facebook.listen()
+    while True:
+        try:
+            facebook.listen()
+        except Exception:
+            sleep(30)
+            facebook = Client(config['facebook']['email'], config['facebook']['pass'])
+            facebook.listen()
