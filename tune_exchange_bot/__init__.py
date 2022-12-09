@@ -27,5 +27,4 @@ ALREADY_IN_PLAYLIST = [row['track']['id'] for row in spotify.playlist_tracks(
     limit=100
 )['items']]
 
-while True:
-    facebook = Client(config['facebook']['email'], config['facebook']['pass'])
+facebook = Client(config['facebook']['email'], config['facebook']['pass'])

@@ -4,6 +4,7 @@ from fbchat import Client
 
 from tune_exchange_bot import config, facebook
 from tune_exchange_bot.utils.facebook import process_message
+from tune_exchange_bot.utils.logger import logger
 
 
 THREAD = config['facebook']['thread_id']
@@ -26,7 +27,8 @@ if __name__ == "__main__":
     while True:
         try:
             facebook.listen()
-        except Exception:
+        except Exception as e:
+            logger.error(e)
             sleep(30)
             facebook = Client(config['facebook']['email'], config['facebook']['pass'])
             facebook.listen()
