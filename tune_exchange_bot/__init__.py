@@ -1,5 +1,6 @@
 import configparser
 import os
+from typing import List
 
 import spotipy
 from fbchat import Client
@@ -21,10 +22,43 @@ spotify = spotipy.Spotify(auth_manager=SpotifyOAuth(
     open_browser=False,
 ))
 
-ALREADY_IN_PLAYLIST = [row['track']['id'] for row in spotify.playlist_tracks(
-    config['spotify']['playlist'],
-    fields="items(track(id))",
-    limit=100
-)['items']]
+
+def get_already_added_tracks(playlist_id: str) -> List[str]:
+    """Get a list of track IDs that already exist in playlist `playlist_id`.
+
+    Parameters
+    ----------
+    playlist_id : str
+        desired playlist ID
+
+    Returns
+    -------
+    List[str]
+        list of Spotify track IDs
+    """
+    track_ids = []
+    offset = 0
+
+    while True:
+        results = [
+            row['track']['id']
+            for row in spotify.playlist_tracks(
+                playlist_id,
+                fields="items(track(id))",
+                limit=100,
+                offset=offset
+            )['items']
+        ]
+
+        if results:
+            track_ids.extend(results)
+            offset += len(results)
+        else:
+            break
+
+    return track_ids
+
+
+ALREADY_IN_PLAYLIST = get_already_added_tracks(config['spotify']['playlist'])
 
 facebook = Client(config['facebook']['email'], config['facebook']['pass'])
