@@ -3,11 +3,11 @@ from time import sleep
 from fbchat import Client
 
 from tune_exchange_bot import config, facebook
-from tune_exchange_bot.utils.facebook import process_message
+from tune_exchange_bot.utils.handler import process_message
 from tune_exchange_bot.utils.logger import logger
 
 
-THREAD = config['facebook']['thread_id']
+THREAD = config["facebook"]["thread_id"]
 
 
 def recieve_message(message_object, author_id, thread_id, thread_type, **kwargs):
@@ -30,5 +30,5 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(e)
             sleep(30)
-            facebook = Client(config['facebook']['email'], config['facebook']['pass'])
+            facebook = Client(config["facebook"]["email"], config["facebook"]["pass"])
             facebook.listen()

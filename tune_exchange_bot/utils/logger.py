@@ -13,15 +13,11 @@ if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
 handler = logging.FileHandler(
-    os.path.join(
-        log_dir,
-        f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
-    )
+    os.path.join(log_dir, f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log")
 )
 
 formatter = logging.Formatter(
-    "%(asctime)s -  %(name)s: %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S"
+    "%(asctime)s -  %(name)s: %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
 )
 handler.setFormatter(formatter)
 

@@ -1,4 +1,4 @@
-from tune_exchange_bot import ALREADY_IN_PLAYLIST
+from tune_exchange_bot import ALREADY_IN_PLAYLIST, config, spotify
 from tune_exchange_bot.utils.helpers import parse_spotify_track_id
 from tune_exchange_bot.utils.logger import logger
 from tune_exchange_bot.utils.spotify import add_to_playlist
@@ -23,7 +23,7 @@ def process_message(message_object: dict):
 
     if track_id:
         logger.info(f"Adding `{track_id}` to playlist...")
-        add_to_playlist(track_id)
+        add_to_playlist(spotify, track_id, playlist=config["spotify"]["playlist"])
         ALREADY_IN_PLAYLIST.append(track_id)
     else:
         logger.debug(f"Message `{message}` did not contain a track ID.")
